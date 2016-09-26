@@ -14,10 +14,10 @@ counterButton.onclick=function(){
   request.open('GET','http://localhost:8080/counter',true)
   request.send(null);
 };
-var nameInput=document.querySelector("#name");
-var name=nameInput.value;
 var submit=document.querySelector("#submit-btn");
 submit.onclick=function(){
+  var nameInput=document.querySelector("#name");
+  var name=nameInput.value;
   //make a request
   var request=new XMLHttpRequest();
   request.onreadystatechange=function(){
