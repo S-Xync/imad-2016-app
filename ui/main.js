@@ -14,3 +14,17 @@ counterButton.onclick=function(){
   request.open('GET','http://localhost:8080/counter',true)
   request.send(null);
 };
+var nameInput=document.querySelector("#name");
+var name=nameInput.value;
+var submit=document.querySelector("#submit-btn");
+submit.onclick=function(){
+  //make a request
+  //capture the response
+  var names=["name1","name2","name3","name4"];
+  var list='';
+  for(var i=0;i<names.length;i++){
+    list+='<li>'+names[i]+'</li>';
+  }
+  var ul=document.querySelector("#namelist");
+  ul.innerHTML=list;
+};
