@@ -10,7 +10,7 @@ var config={
 	database:'s-xync',
 	host:'db.imad.hasura-app.io',
 	port:'5432',
-	password:process.env.DB_PASSWORD
+	password:'db-s-xync-5758'
 };
 var app = express();
 app.use(morgan('combined'));
