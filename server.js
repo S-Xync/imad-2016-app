@@ -6,11 +6,11 @@ var crypto=require('crypto');
 var bodyParser=require('body-parser');
 var session=require('express-session');
 var config={
-	user:'postgres',
-	database:'mydb1',
-	host:'127.0.0.1',
+	user:'s-xync',
+	database:'s-xync',
+	host:'db.imad.hasura-app.io',
 	port:'5432',
-	password:'postgres'
+	password:'process.env.DB_PASSWORD'
 };
 var app = express();
 app.use(morgan('combined'));
