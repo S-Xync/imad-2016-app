@@ -4,6 +4,7 @@ var path = require('path');
 var Pool=require('pg').Pool;
 var crypto=require('crypto');
 var bodyParser=require('body-parser');
+var session=require('express-session');
 var config={
 	user:'postgres',
 	database:'mydb1',
@@ -14,6 +15,10 @@ var config={
 var app = express();
 app.use(morgan('combined'));
 app.use(bodyParser.json());
+app.use(session({
+	secret:'someRandomValue',
+	cookie:{maxAge:1000*60*60*24*30}
+}));
 // var articleName;
 function createtemplate(data){
 	var title=data.title;
@@ -101,6 +106,8 @@ app.post('/login',function(req,res){
 				var salt=dbString.split('$')[2];
 				var hashedPassword=hash(password,salt);
 				if(hashedPassword===dbString){
+					req.session.auth={userId:result.rows[0].id};
+					//{auth:{userId}}
 					res.send('Credentials are correct!');
 				}else{
 					res.status(403).send("username/password incorrect");
@@ -108,6 +115,17 @@ app.post('/login',function(req,res){
 			}
 		}
 	});
+});
+app.get('/check-login',function(req,res){
+	if (req.session&&req.session.auth&&req.session.auth.userId) {
+		res.send('You are logged in: '+req.session.auth.userId.toString());
+	}else{
+		res.send('You are not Logged In');
+	}
+});
+app.get('/logout',function(req,res){
+	delete 	req.session.auth;
+	res.send('You are logged out');
 });
 app.get('/ui/style.css', function (req, res) {
 	res.sendFile(path.join(__dirname, 'ui', 'style.css'));
